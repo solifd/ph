@@ -13,9 +13,10 @@ source vars
 
 ./build-ca   #一路的回车
 
-./build-key-server --batch centos   #一路的回车，提示输入y就跟着输入
+./build-key-server --batch server   #一路的回车，提示输入y就跟着输入
 
 ./build-key --batch user01   #一路的回车，提示输入y就跟着输入
 
 ./build-dh   #这是一个漫长的等待过程
 
+openvpn --genkey --secret keys/ta.key
