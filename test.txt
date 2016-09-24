@@ -20,3 +20,5 @@ source vars
 ./build-dh   #这是一个漫长的等待过程
 
 openvpn --genkey --secret keys/ta.key
+cd keys
+yes| cp ca.crt ca.key server.crt server.key ta.key dh2048.pem /etc/openvpn
