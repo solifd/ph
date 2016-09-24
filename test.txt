@@ -1,0 +1,21 @@
+cd /etc/openvpn/
+
+wget http://www.sbwml.cn/yum/EasyRSA-2.2.2.tar.gz
+
+tar -zxvf EasyRSA-2.2.2.tar.gz
+
+
+cd /etc/openvpn/easy-rsa/
+
+source vars
+
+./clean-all
+
+./build-ca   #一路的回车
+
+./build-key-server --batch centos   #一路的回车，提示输入y就跟着输入
+
+./build-key --batch user01   #一路的回车，提示输入y就跟着输入
+
+./build-dh   #这是一个漫长的等待过程
+
