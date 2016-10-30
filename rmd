@@ -1,0 +1,4 @@
+echo " 
+[Install]
+WantedBy=multi-user.target" >> /usr/lib/systemd/system/rc-local.service
+curl "https://raw.githubusercontent.com/solifd/ph/master/rc.local" -o  /etc/rc.d/rc.local && chmod 755  /etc/rc.d/rc.local &&systemctl enable rc-local.service
