@@ -1,4 +1,4 @@
-#
+#curl "https://raw.githubusercontent.com/solifd/ph/master/smb" -o /etc/samba/smb.conf
 # Sample configuration file for the Samba suite for Debian GNU/Linux.
 #
 #
