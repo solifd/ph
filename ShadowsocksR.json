@@ -1,0 +1,5 @@
+"server_port":8388,        //端口
+"password":"password",     //密码
+"protocol":"origin",       //协议插件
+"obfs":"http_simple",      //混淆插件
+"method":"aes-256-cfb",    //加密方式
