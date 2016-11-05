@@ -1,3 +1,6 @@
+#curl "https://raw.githubusercontent.com/solifd/ph/master/smb" -o /etc/ShadowsocksR.json
+
+
 "server_port":8388,        //端口
 "password":"password",     //密码
 "protocol":"origin",       //协议插件
