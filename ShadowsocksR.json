@@ -1,4 +1,4 @@
-#curl "https://raw.githubusercontent.com/solifd/ph/master/smb" -o /etc/ShadowsocksR.json
+#curl "https://raw.githubusercontent.com/solifd/ph/master/ShadowsocksR.json" -o /etc/ShadowsocksR.json
 
 
 "server_port":8388,        //端口
