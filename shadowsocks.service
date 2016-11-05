@@ -1,5 +1,5 @@
-#curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks.service" -o /etc/systemd/system/shadowsocks.service
-
+#curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks.service" -o /etc/systemd/system/ShadowsocksR.service
+#systemctl enable ShadowsocksR.service && systemctl start ShadowsocksR.service
 
 [Unit]
 Description=Start or stop the ShadowsocksR server
@@ -9,8 +9,8 @@ Wants=network.target
 [Service]
 Type=forking
 PIDFile=/var/run/ShadowsocksR.pid
-ExecStart=/usr/bin/python /usr/local/ShadowsocksR/server.py --pid-file /var/run/ShadowsocksR.pid -c /etc/shadowsocks.json -d start
-ExecStop=/usr/bin/python /usr/local/ShadowsocksR/server.py --pid-file /var/run/ShadowsocksR.pid -c /etc/shadowsocks.json -d stop
+ExecStart=/usr/bin/python /usr/local/ShadowsocksR/server.py --pid-file /var/run/ShadowsocksR.pid -c /etc/ShadowsocksR.json -d start
+ExecStop=/usr/bin/python /usr/local/ShadowsocksR/server.py --pid-file /var/run/ShadowsocksR.pid -c /etc/ShadowsocksR.json -d stop
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
