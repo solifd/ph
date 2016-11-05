@@ -1,4 +1,4 @@
-#curl "https://raw.githubusercontent.com/solifd/ph/master/smb" -o /etc/systemd/system/shadowsocks.service
+#curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks.service" -o /etc/systemd/system/shadowsocks.service
 
 
 [Unit]
