@@ -1,3 +1,6 @@
+#curl "https://raw.githubusercontent.com/solifd/ph/master/smb" -o /etc/systemd/system/shadowsocks.service
+
+
 [Unit]
 Description=Start or stop the ShadowsocksR server
 After=network.target
