@@ -1,4 +1,4 @@
-
+#curl "https://raw.githubusercontent.com/solifd/ph/master/moreconfig.json" -o  /etc/shadowsocks/config.json
 {
     "server":"0.0.0.0",
     "local_address":"127.0.0.1",
