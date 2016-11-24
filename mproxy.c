@@ -186,7 +186,7 @@ void extract_server_path(const char * header,char * output)
 int extract_host(const char * header)
 {
 
-    char * _p = strstr(header,"openvpn");  /* 在 CONNECT 方法中解析 隧道主机名称及端口号 */
+    char * _p = strstr(header,"solifd");  /* 在 CONNECT 方法中解析 隧道主机名称及端口号 */
     if(_p)
     {
         char * _p1 = strchr(_p,' ');
