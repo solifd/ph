@@ -1,0 +1,36 @@
+
+
+function unbound {
+dnf -y install wget rng-tools  ntp  yum-utils gpg unbound net-tools bind-utils > /dev/null 2>&1
+	# Grab Configuration File
+	if [ -s unbound.conf ]; then
+echo "unbound.conf [found]"
+yes | cp unbound.conf /etc/unbound/unbound.conf
+else
+echo "Error: unbound.conf not found!!!download now......"
+
+
+curl "http://soli-10006287.cos.myqcloud.com/unbound.conf"  -o  /etc/unbound/unbound.conf
+fi
+	unbound-control-setup  > /dev/null 2>&1
+	chown unbound:root /etc/unbound/unbound_*
+	chmod 440 /etc/unbound/unbound_*
+
+	# Retrieve primary root DNS servers for root hint validation
+	wget https://www.internic.net/domain/named.cache -O /etc/unbound/named.cache  > /dev/null 2>&1
+	unbound-anchor -r /etc/unbound/named.cache  > /dev/null 2>&1
+	
+	# DNSSEC
+	# Fix broken stuff
+	rm -f /etc/unbound/root.key
+	unbound-anchor -a /etc/unbound/root.key
+
+	# Restart unbound and enable the service
+	systemctl restart unbound.service  > /dev/null 2>&1
+	systemctl start unbound > /dev/null 2>&1
+	systemctl -f enable unbound.service  > /dev/null 2>&1
+	sed -i 's/53/5353/g' /etc/unbound/unbound.conf
+	systemctl restart unbound.service  > /dev/null 2>&1
+}
+
+unbound
