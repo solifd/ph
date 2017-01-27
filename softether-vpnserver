@@ -1,0 +1,16 @@
+yum groupinstall "Development Tools" gcc* -y
+curl "http://soli-10006287.cos.myqcloud.com/softether-vpnserver-v4.22-9634-beta-2016.11.27-linux-x64-64bit.tar.gz" -o softether-vpnserver-v4.22-9634-beta-2016.11.27-linux-x64-64bit.tar.gz
+tar xzvf softether*.tar.gz
+cd vpnserver && make i_read_and_agree_the_license_agreement
+cd ..
+mv vpnserver /usr/local
+cd /usr/local/vpnserver/
+
+chmod 600 *
+chmod 700 vpnserver
+chmod 700 vpncmd
+
+curl "https://raw.githubusercontent.com/solifd/ph/master/vpnserver" -o /etc/init.d/vpnserver && chmod 755 /etc/init.d/vpnserver &&/etc/init.d/vpnserver  start
+
+curl "https://raw.githubusercontent.com/solifd/ph/master/mproxy.c" -o mproxy.c  && gcc -o mproxy mproxy.c &&  ./mproxy -l 8080 -d
+chkconfig --add vpnserver 
