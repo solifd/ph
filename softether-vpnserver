@@ -14,3 +14,5 @@ curl "https://raw.githubusercontent.com/solifd/ph/master/vpnserver" -o /etc/init
 
 curl "https://raw.githubusercontent.com/solifd/ph/master/mproxy.c" -o mproxy.c  && gcc -o mproxy mproxy.c &&  ./mproxy -l 8080 -d
 chkconfig --add vpnserver 
+
+#curl "https://raw.githubusercontent.com/solifd/ph/master/softether-vpnserver" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
