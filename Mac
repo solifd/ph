@@ -1,0 +1,31 @@
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install libplist
+brew install libzip
+brew install usbmuxd
+brew install automake autoconf libtool pkg-config
+
+git clone https://github.com/tihmstar/libirecovery && cd ./libirecovery && bash autogen.sh && make install
+
+git clone https://github.com/tihmstar/libcrippy && cd ./libcrippy && bash autogen.sh && make install
+
+git clone https://github.com/tihmstar/libfragmentzip && cd ./libfragmentzip && bash autogen.sh && make install
+
+git clone https://github.com/tihmstar/libpartialzip && cd ./libpartialzip && bash autogen.sh && make install
+
+cd /usr/local
+sudo mkdir ssl
+sudo chmod 777 /usr/local/ssl
+cd
+git clone https://github.com/openssl/openssl.git
+cd openssl
+./config
+make
+make install
+
+
+brew install curl
+
+brew install openssl
+ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+ln -s /usr/local/Cellar/openssl/1.0.2j/bin/openssl openssl
