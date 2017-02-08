@@ -29,9 +29,7 @@ wget -O ~/EasyRSA-3.0.1.tgz http://soli-10006287.cos.myqcloud.com/EasyRSA-3.0.1.
 
 }
 EasyRSA
-systemctl start openvpn@server.service
-systemctl -f enable openvpn@server.service
-systemctl status openvpn@server.service
+
 
 rm -rf /etc/openvpn/server.conf
 echo "
