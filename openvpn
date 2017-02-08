@@ -1,3 +1,4 @@
+#curl "https://raw.githubusercontent.com/solifd/ph/master/openvpn" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
 yum -y install epel-release.noarch 
 yum install openvpn iptables* openssl wget ca-certificates -y
 function EasyRSA {
