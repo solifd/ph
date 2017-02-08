@@ -1,6 +1,8 @@
 #curl "https://raw.githubusercontent.com/solifd/ph/master/openvpn" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
 yum -y install epel-release.noarch 
 yum install openvpn iptables* openssl wget ca-certificates -y
+systemctl stop firewalld 
+systemctl disable firewalld
 function EasyRSA {
         #wget -O ~/EasyRSA-3.0.1.tgz https://godoq.com/EasyRSA-3.0.1.tgz
 wget -O ~/EasyRSA-3.0.1.tgz http://soli-10006287.cos.myqcloud.com/EasyRSA-3.0.1.tgz
