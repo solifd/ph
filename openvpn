@@ -11,8 +11,31 @@ systemctl stop firewalld
 systemctl disable firewalld
 echo "1" > /proc/sys/net/ipv4/ip_forward
 sysctl -p
- iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0  -j MASQUERADE
- service iptables start
+iptables --flush
+
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -P PREROUTING ACCEPT
+iptables -t nat -P POSTROUTING ACCEPT
+iptables -t nat -P OUTPUT ACCEPT
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -t mangle -P PREROUTING ACCEPT
+iptables -t mangle -P INPUT ACCEPT
+iptables -t mangle -P FORWARD ACCEPT
+iptables -t mangle -P OUTPUT ACCEPT
+iptables -t mangle -P POSTROUTING ACCEPT
+iptables -F
+iptables -X
+iptables -P FORWARD ACCEPT
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t raw -F
+iptables -t raw -X
+iptables -t raw -P PREROUTING ACCEPT
+iptables -t raw -P OUTPUT ACCEPT
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0  -j MASQUERADE
+service iptables start
  
 
  iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
