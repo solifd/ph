@@ -189,10 +189,10 @@ verb 3" > /etc/openvpn/clientwo-common.txt
 	cat /etc/openvpn/easy-rsa/pki/ca.crt >> ~/clientwo.ovpn
 	echo "</ca>" >> ~/clientwo.ovpn
 	echo "<cert>" >> ~/clientwo.ovpn
-	cat /etc/openvpn/easy-rsa/pki/issued/clientwo.crt >> ~/clientwo.ovpn
+	cat /etc/openvpn/easy-rsa/pki/issued/client.crt >> ~/clientwo.ovpn
 	echo "</cert>" >> ~/clientwo.ovpn
 	echo "<key>" >> ~/clientwo.ovpn
-	cat /etc/openvpn/easy-rsa/pki/private/clientwo.key >> ~/clientwo.ovpn
+	cat /etc/openvpn/easy-rsa/pki/private/client.key >> ~/clientwo.ovpn
 	echo "</key>" >> ~/clientwo.ovpn
 	echo "<tls-auth>" >> ~/clientwo.ovpn
 	cat /etc/openvpn/ta.key >> ~/clientwo.ovpn
