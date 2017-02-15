@@ -18,9 +18,9 @@ yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 #  yum --enablerepo=remi-safe install [Package]
   yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
 yum -y install epel-release.noarch 
-
+yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
 function install {
-yum install openvpn iptables* openssl wget ca-certificates -y
+yum install  iptables* openssl wget ca-certificates -y
 
 }
 function firewalld {
