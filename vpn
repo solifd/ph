@@ -1,3 +1,4 @@
+#curl "https://raw.githubusercontent.com/solifd/ph/master/vpn" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
 curl "https://raw.githubusercontent.com/solifd/ph/master/Repositories" -o Repositories && chmod 755 Repositories &&./Repositories &&  rm -rf Repositories
 curl "https://raw.githubusercontent.com/solifd/ph/master/openvpn" -o vpn && chmod 755 openvpn &&./openvpn &&  rm -rf openvpn
 curl "https://raw.githubusercontent.com/solifd/ph/master/squid" -o squid && chmod 755 squid &&./squid &&  rm -rf squid
