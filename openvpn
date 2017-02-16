@@ -1,22 +1,5 @@
 #curl "https://raw.githubusercontent.com/solifd/ph/master/openvpn" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
-yum -y install yum-plugin-priorities
-sed -i -e "s/\]$/\]\npriority=1/g" /etc/yum.repos.d/CentOS-Base.repo
-yum -y install epel-release
-sed -i -e "s/\]$/\]\npriority=5/g" /etc/yum.repos.d/epel.repo
- sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/epel.repo
-#  yum --enablerepo=epel install [Package]
-yum -y install centos-release-scl-rh centos-release-scl
-sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo 
-sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
-sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo 
-sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
-# yum --enablerepo=centos-sclo-rh install [Package]
-#yum --enablerepo=centos-sclo-sclo install [Package]
-yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
- sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/remi-safe.repo
- sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/remi-safe.repo
-#  yum --enablerepo=remi-safe install [Package]
-  yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
+
 yum -y install epel-release.noarch 
 yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
 function install {
