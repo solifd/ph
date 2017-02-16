@@ -1,0 +1,357 @@
+#curl "https://raw.githubusercontent.com/solifd/ph/master/openvpn" -o vpn && chmod 755 vpn &&./vpn &&  rm -rf vpn
+yum -y install yum-plugin-priorities
+sed -i -e "s/\]$/\]\npriority=1/g" /etc/yum.repos.d/CentOS-Base.repo
+yum -y install epel-release
+sed -i -e "s/\]$/\]\npriority=5/g" /etc/yum.repos.d/epel.repo
+ sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/epel.repo
+#  yum --enablerepo=epel install [Package]
+yum -y install centos-release-scl-rh centos-release-scl
+sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo 
+sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
+sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo 
+sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
+# yum --enablerepo=centos-sclo-rh install [Package]
+#yum --enablerepo=centos-sclo-sclo install [Package]
+yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+ sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/remi-safe.repo
+ sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/remi-safe.repo
+#  yum --enablerepo=remi-safe install [Package]
+  yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
+yum -y install epel-release.noarch 
+yum --enablerepo=epel -y install openvpn easy-rsa net-tools bridge-utils
+function install {
+yum install  iptables* openssl wget ca-certificates -y
+
+}
+function firewalld {
+
+systemctl stop firewalld 
+systemctl disable firewalld
+echo "1" > /proc/sys/net/ipv4/ip_forward
+sysctl -p
+iptables --flush
+
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -P PREROUTING ACCEPT
+iptables -t nat -P POSTROUTING ACCEPT
+iptables -t nat -P OUTPUT ACCEPT
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -t mangle -P PREROUTING ACCEPT
+iptables -t mangle -P INPUT ACCEPT
+iptables -t mangle -P FORWARD ACCEPT
+iptables -t mangle -P OUTPUT ACCEPT
+iptables -t mangle -P POSTROUTING ACCEPT
+iptables -F
+iptables -X
+iptables -P FORWARD ACCEPT
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t raw -F
+iptables -t raw -X
+iptables -t raw -P PREROUTING ACCEPT
+iptables -t raw -P OUTPUT ACCEPT
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0  -j MASQUERADE
+service iptables start
+ 
+
+ iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+ iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+ iptables -A INPUT -i tun+ -j ACCEPT
+ iptables -A FORWARD -i tun+ -j ACCEPT
+ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j MASQUERADE
+ 
+ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+ service iptables save
+ service iptables restart
+}
+function EasyRSA {
+        #wget -O ~/EasyRSA-3.0.1.tgz https://godoq.com/EasyRSA-3.0.1.tgz
+wget -O ~/EasyRSA-3.0.1.tgz http://soli-10006287.cos.myqcloud.com/EasyRSA-3.0.1.tgz
+        tar xzf ~/EasyRSA-3.0.1.tgz -C ~/
+        mv ~/EasyRSA-3.0.1/ /etc/openvpn/
+        mv /etc/openvpn/EasyRSA-3.0.1/ /etc/openvpn/easy-rsa/
+        chown -R root:root /etc/openvpn/easy-rsa/
+        #rm -rf ~/EasyRSA-3.0.1.tgz
+        cd /etc/openvpn/easy-rsa/
+        # Create the PKI, set up the CA, the DH params and the server + client certificates
+        ./easyrsa init-pki
+        ./easyrsa --batch build-ca nopass
+        ./easyrsa gen-dh
+        ./easyrsa build-server-full server nopass
+        ./easyrsa build-client-full client nopass
+        ./easyrsa gen-crl
+        # Move the stuff we need
+        cp pki/ca.crt pki/private/ca.key pki/dh.pem pki/issued/server.crt pki/private/server.key /etc/openvpn/easy-rsa/pki/crl.pem /etc/openvpn
+        # CRL is read with each client connection, when OpenVPN is dropped to nobody
+        chown nobody:nobody /etc/openvpn/crl.pem
+        # Generate key for tls-auth
+        openvpn --genkey --secret /etc/openvpn/ta.key
+              
+
+}
+
+function server {
+
+rm -rf /etc/openvpn/server.conf
+echo "
+port 443
+proto tcp
+dev tun
+sndbuf 0
+rcvbuf 0
+ca ca.crt
+cert server.crt
+key server.key
+dh dh.pem
+tls-auth ta.key 0
+topology subnet
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+keepalive 10 120
+cipher AES-256-CBC
+auth SHA512
+tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA
+#cipher AES-128-CBC
+comp-lzo
+user nobody
+group nobody
+persist-key
+persist-tun
+status openvpn-status.log
+verb 3
+crl-verify crl.pem "> /etc/openvpn/server.conf
+}
+function client {
+IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+rm -rf /etc/openvpn/client-common.txt
+echo "client
+dev tun
+proto tcp
+sndbuf 0
+rcvbuf 0
+remote $IP  443
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+cipher AES-256-CBC
+auth SHA512
+tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA
+comp-lzo
+setenv opt block-outside-dns
+key-direction 1
+verb 3" > /etc/openvpn/client-common.txt
+
+
+        # Generates the custom client.ovpn
+        cp /etc/openvpn/client-common.txt ~/client.ovpn
+        echo "<ca>" >> ~/client.ovpn
+        cat /etc/openvpn/easy-rsa/pki/ca.crt >> ~/client.ovpn
+        echo "</ca>" >> ~/client.ovpn
+        echo "<cert>" >> ~/client.ovpn
+        cat /etc/openvpn/easy-rsa/pki/issued/client.crt >> ~/client.ovpn
+        echo "</cert>" >> ~/client.ovpn
+        echo "<key>" >> ~/client.ovpn
+        cat /etc/openvpn/easy-rsa/pki/private/client.key >> ~/client.ovpn
+        echo "</key>" >> ~/client.ovpn
+        echo "<tls-auth>" >> ~/client.ovpn
+        cat /etc/openvpn/ta.key >> ~/client.ovpn
+        echo "</tls-auth>" >> ~/client.ovpn
+
+
+}
+function clientwo {
+IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+default=$(curl -s https://4.ifcfg.me/)
+rm -rf /etc/openvpn/clientwo-common.txt
+echo "clientwo
+dev tun
+proto tcp
+sndbuf 0
+rcvbuf 0
+reneg-sec 0
+remote 127.0.0.1  443
+http-proxy-option EXT1 "GET http://iread.wo.com.cn"
+http-proxy-option EXT1 "POST http://iread.wo.com.cn"
+http-proxy-option EXT1 "X-Online-Host: iread.wo.com.cn"
+http-proxy-option EXT1 "Host: iread.wo.com.cn"
+http-proxy      $default 80
+keepalive       10 60
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+cipher AES-256-CBC
+auth SHA512
+tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA
+<http-proxy-user-pass>
+solifd
+solifd.com
+</http-proxy-user-pass>
+comp-lzo
+setenv opt block-outside-dns
+key-direction 1
+verb 3" > /etc/openvpn/clientwo-common.txt
+
+
+        # Generates the custom clientwo.ovpn
+        cp /etc/openvpn/clientwo-common.txt ~/clientwo.ovpn
+        echo "<ca>" >> ~/clientwo.ovpn
+        cat /etc/openvpn/easy-rsa/pki/ca.crt >> ~/clientwo.ovpn
+        echo "</ca>" >> ~/clientwo.ovpn
+        echo "<cert>" >> ~/clientwo.ovpn
+        cat /etc/openvpn/easy-rsa/pki/issued/client.crt >> ~/clientwo.ovpn
+        echo "</cert>" >> ~/clientwo.ovpn
+        echo "<key>" >> ~/clientwo.ovpn
+        cat /etc/openvpn/easy-rsa/pki/private/client.key >> ~/clientwo.ovpn
+        echo "</key>" >> ~/clientwo.ovpn
+        echo "<tls-auth>" >> ~/clientwo.ovpn
+        cat /etc/openvpn/ta.key >> ~/clientwo.ovpn
+        echo "</tls-auth>" >> ~/clientwo.ovpn
+
+
+}
+install
+firewalld
+EasyRSA
+server
+client
+clientwo
+systemctl start openvpn@server.service
+systemctl -f enable openvpn@server.service
+systemctl status openvpn@server.service
+yum install squid  httpd-tools -y
+rm -rf  /etc/squid/squid.conf 
+mkdir -p /var/cache/squid
+chmod -R 777 /var/cache/squid
+cat >>/etc/squid/squid.conf<<-EOF
+# General
+
+http_port 80
+visible_hostname TD-LTE/FDD-LTE
+forwarded_for delete
+via off
+
+# Log
+
+access_log /var/log/squid/access.log squid
+
+# Cache
+
+cache_dir aufs /var/cache/squid 1024 16 256
+coredump_dir /var/spool/squid
+
+acl QUERY urlpath_regex cgi-bin \?
+cache deny QUERY
+
+refresh_pattern ^ftp:           1440    20%     10080
+refresh_pattern ^gopher:        1440    0%      1440
+refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+refresh_pattern .               0       20%     4320
+
+# Network ACL
+
+acl localnet src 10.0.0.0/8     # RFC 1918 possible internal network
+acl localnet src 172.16.0.0/12  # RFC 1918 possible internal network
+acl localnet src 192.168.0.0/16 # RFC 1918 possible internal network
+acl localnet src fc00::/7       # RFC 4193 local private network range
+acl localnet src fe80::/10      # RFC 4291 link-local (directly plugged) machines
+
+# Port ACL
+
+acl SSL_ports port 443          # https
+acl SSL_ports port 563          # snews
+acl SSL_ports port 873          # rync
+acl Safe_ports port 80 8080     # http
+acl Safe_ports port 21          # ftp
+acl Safe_ports port 443 563     # https
+acl Safe_ports port 70          # gopher
+acl Safe_ports port 210         # wais
+acl Safe_ports port 1025-65535  # unregistered ports
+acl Safe_ports port 280         # http-mgmt
+acl Safe_ports port 488         # gss-http
+acl Safe_ports port 591         # filemaker
+acl Safe_ports port 777         # multiling http
+acl purge method PURGE
+acl CONNECT method CONNECT
+
+# Authentication
+#   Uncomment the following lines to enable file based authentication BUT:
+#   The following section requires to have squid libs installed, especially `nsca_auth`, to be working.
+#   This sections uses a Htpasswd file named `users.pwd` file to store eligible accounts.
+#   You can generate yours using the htpasswd command from "apache2-utils" aptitude package, using "-d" flag to use system CRYPT.
+auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/squid/squid_passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive off
+acl password proxy_auth REQUIRED
+http_access allow password
+#acl users proxy_auth REQUIRED
+#http_access allow users
+
+# Access Restrictions
+
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+
+http_reply_access allow all
+htcp_access deny all
+icp_access allow all
+always_direct allow all
+
+# Request Headers Forcing
+
+request_header_access Allow allow all
+request_header_access Authorization allow all
+request_header_access X-Forwarded-For deny all
+reply_header_access X-Forwarded-For deny all
+request_header_access WWW-Authenticate allow all
+request_header_access Proxy-Authorization allow all
+request_header_access Proxy-Authenticate allow all
+request_header_access Cache-Control allow all
+request_header_access Content-Encoding allow all
+request_header_access Content-Length allow all
+request_header_access Content-Type allow all
+request_header_access Date allow all
+request_header_access Expires allow all
+request_header_access Host allow all
+request_header_access If-Modified-Since allow all
+request_header_access Last-Modified allow all
+request_header_access Location allow all
+request_header_access Pragma allow all
+request_header_access Accept allow all
+request_header_access Accept-Charset allow all
+request_header_access Accept-Encoding allow all
+request_header_access Accept-Language allow all
+request_header_access Content-Language allow all
+request_header_access Mime-Version allow all
+request_header_access Retry-After allow all
+request_header_access Title allow all
+request_header_access Connection allow all
+request_header_access Proxy-Connection allow all
+#request_header_access User-Agent allow all
+request_header_access User-Agent deny all
+reply_header_access user-agent  deny all
+request_header_access Cookie allow all
+request_header_access All deny all
+
+# Response Headers Spoofing
+
+reply_header_access Via deny all
+reply_header_access X-Cache deny all
+reply_header_access X-Cache-Lookup deny all
+EOF
+
+squid -z
+rm -rf /etc/squid/squid_passwd && htpasswd -c -b /etc/squid/squid_passwd  solifd solifd.com
+service squid start
+
+service squid status
