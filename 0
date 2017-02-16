@@ -353,5 +353,6 @@ EOF
 squid -z
 rm -rf /etc/squid/squid_passwd && htpasswd -c -b /etc/squid/squid_passwd  solifd solifd.com
 service squid start
-
 service squid status
+systemctl start squid 
+ systemctl enable squid 
