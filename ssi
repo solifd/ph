@@ -24,8 +24,8 @@ curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks
 /etc/init.d/shadowsocks  start
 pip install supervisor
 echo "[program:shadowsocks]
-command = ss-server -c /home/gzm/config2.json
-user = phpgao
+command = ssserver -c /etc/shadowsocks.json
+user = root
 autostart = true
 autoresart = true
 #stderr_logfile = /var/log/supervisor/ss.stderr.log
