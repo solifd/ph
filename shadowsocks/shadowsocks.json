@@ -3,10 +3,22 @@
  "local_address": "127.0.0.1",
  "local_port":1080,
   "port_password": {
-     "8381": "foobar1",
-     "8382": "foobar2",
-     "8383": "foobar3",
-     "8384": "foobar4"
+     "137": "foobar1",
+     "138": "foobar2",
+     "139": "foobar3",
+     "264": "foobar4"
+     "524": "foobar1",
+     "189": "foobar2",
+     "8080": "foobar3",
+     "130": "foobar4"
+     "131": "foobar1",
+     "132": "foobar2",
+     "155": "foobar3",
+     "156": "foobar4"
+     "185": "foobar1",
+     "186": "foobar2",
+     "145": "foobar3",
+     "176": "foobar4"
  },
  "timeout":300,
  "method":"aes-256-cfb",
