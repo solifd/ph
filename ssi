@@ -68,6 +68,7 @@ chkconfig --add supervisord
 chkconfig  --list  supervisord
 }
 #packages
-#supervisor
 shadowsocks
+supervisor
+
 
