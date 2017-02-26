@@ -1,5 +1,23 @@
+#!/bin/bash
+
+# This will configure and harden the server :)
+
+# Test if tun/tap is enabled
+if test ! -e "/dev/net/tun"; then
+        echo "TUN/TAP is not enabled. Please enable for this to work."
+		exit
+fi
+
+# Check if running as root
+if [ "$(id -u)" != "0" ]; then
+  exec sudo "$0" "$@"
+fi
+
 yum install -y unzip autoconf automake make zlib-devel libtool libevent xmlto asciidoc pcre pcre-devel openssl-devel gcc perl perl-devel cpio expat-devel gettext-devel
 yum install gettext gcc autoconf libtool automake make libmbedtls-devel asciidoc xmlto udns-devel libev-devel -y
+
+# Install Required Packages
+function packages {
 curl "http://soli-10006287.cos.myqcloud.com/libsodium-1.0.11.tar.gz" -o libsodium-1.0.11.tar.gz
 tar xvf libsodium-1.0.11.tar.gz
 pushd libsodium-1.0.11
@@ -16,6 +34,9 @@ make
 make install
 popd
 rm -rf mbedtls*
+
+}
+#packages
 yum install python-setuptools -y&& easy_install pip
 pip install shadowsocks
 curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
