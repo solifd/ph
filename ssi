@@ -51,7 +51,8 @@ user = root
 autostart = true
 autoresart = true
 #stderr_logfile = /var/log/supervisor/ss.stderr.log
-#stdout_logfile = /var/log/supervisor/ss.stdout.log" > /etc/supervisord.conf
+#stdout_logfile = /var/log/supervisor/ss.stdout.log
+">> /etc/supervisord.conf
 echo "#!/bin/sh
 #chkconfig: 2345 80 90
 #description:auto_run
