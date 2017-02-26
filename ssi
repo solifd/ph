@@ -37,13 +37,8 @@ popd
 rm -rf mbedtls*
 
 }
-#packages
-yum install python-setuptools -y&& easy_install pip
-pip install shadowsocks
-curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
-chmod +x /etc/init.d/shadowsocks
-curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
-/etc/init.d/shadowsocks  start
+# supervisor
+function supervisor {
 pip install supervisor
 echo "[program:shadowsocks]
 command = ssserver -c /etc/shadowsocks.json
@@ -61,3 +56,13 @@ echo "#!/bin/sh
 supervisord" > /etc/init.d/supervisord
 chmod +x /etc/init.d/supervisord
 chkconfig --add supervisord
+}
+#packages
+#supervisor
+yum install python-setuptools -y&& easy_install pip
+pip install shadowsocks
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
+chmod +x /etc/init.d/shadowsocks
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
+/etc/init.d/shadowsocks  start
+
