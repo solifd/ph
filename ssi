@@ -67,8 +67,8 @@ chmod +x /etc/init.d/supervisord
 chkconfig --add supervisord
 chkconfig  --list  supervisord
 }
-packages
+
 shadowsocks
 supervisor
-
+packages
 
