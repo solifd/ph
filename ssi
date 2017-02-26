@@ -48,6 +48,7 @@ curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks
 }
 function supervisor {
 pip install supervisor
+echo_supervisord_conf > /etc/supervisord.conf
 echo "[program:shadowsocks]
 command = ssserver -c /etc/shadowsocks.json
 user = root
@@ -64,6 +65,7 @@ echo "#!/bin/sh
 supervisord" > /etc/init.d/supervisord
 chmod +x /etc/init.d/supervisord
 chkconfig --add supervisord
+chkconfig  --list  supervisord
 }
 #packages
 #supervisor
