@@ -1,0 +1,41 @@
+yum install -y unzip autoconf automake make zlib-devel libtool libevent xmlto asciidoc pcre pcre-devel openssl-devel gcc perl perl-devel cpio expat-devel gettext-devel
+yum install gettext gcc autoconf libtool automake make libmbedtls-devel asciidoc xmlto udns-devel libev-devel -y
+curl "http://soli-10006287.cos.myqcloud.com/libsodium-1.0.11.tar.gz" -o libsodium-1.0.11.tar.gz
+tar xvf libsodium-1.0.11.tar.gz
+pushd libsodium-1.0.11
+./configure --prefix=/usr && make
+make install
+echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+ldconfig
+popd
+rm -rf libsodium*
+curl "http://soli-10006287.cos.myqcloud.com/mbedtls-2.4.0-gpl.tgz" -o mbedtls-2.4.0-gpl.tgz
+tar xvf mbedtls-2.4.0-gpl.tgz
+pushd mbedtls-2.4.0
+make
+make install
+popd
+rm -rf mbedtls*
+yum install python-setuptools -y&& easy_install pip
+pip install shadowsocks
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
+chmod +x /etc/init.d/shadowsocks
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
+/etc/init.d/shadowsocks  start
+pip install supervisor
+echo "[program:shadowsocks]
+command = ss-server -c /home/gzm/config2.json
+user = phpgao
+autostart = true
+autoresart = true
+#stderr_logfile = /var/log/supervisor/ss.stderr.log
+#stdout_logfile = /var/log/supervisor/ss.stdout.log" > /etc/supervisord.conf
+chmod +x /etc/init.d/supervisord
+echo "#!/bin/sh
+#chkconfig: 2345 80 90
+#description:auto_run
+# supervisord service for systemd (CentOS 7.0+)
+# by ET-CS (https://github.com/ET-CS)
+supervisord" > /etc/init.d/supervisord
+chmod +x /etc/init.d/supervisord
+chkconfig --add supervisord
