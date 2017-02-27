@@ -52,7 +52,9 @@ echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
 ldconfig
 popd
 rm -rf libsodium*
-wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR -O /etc/init.d/shadowsocks
+#wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR -O /etc/init.d/shadowsocks
+
+
 }
 
 
@@ -142,10 +144,11 @@ EOF
 # Install ShadowsocksR
 function install_ss(){   
 	git clone -b manyuser https://github.com/breakwa11/shadowsocks.git /usr/local/shadowsocks
-        chmod +x /etc/init.d/shadowsocks
-            chkconfig --add shadowsocks
-            chkconfig shadowsocks on       
-        /etc/init.d/shadowsocks start      
+	curl "http://soli-10006287.cos.myqcloud.com/shadowsocksR" -o  /etc/init.d/shadowsocksR
+        chmod +x /etc/init.d/shadowsocksR
+            chkconfig --add shadowsocksR
+            chkconfig shadowsocksR       
+        /etc/init.d/shadowsocksR start      
 }
 
 #改成北京时间
