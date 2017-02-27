@@ -143,8 +143,8 @@ EOF
 
 # Install ShadowsocksR
 function install_ss(){   
-	git clone -b manyuser https://github.com/breakwa11/shadowsocks.git /usr/local/shadowsocks
-	curl "http://soli-10006287.cos.myqcloud.com/shadowsocksR" -o  /etc/init.d/shadowsocksR
+	git clone -b manyuser https://github.com/breakwa11/shadowsocks.git /usr/local/shadowsocksR
+	curl "http://soli-10006287.cos.myqcloud.com/shadowsocksR1" -o  /etc/init.d/shadowsocksR
         chmod +x /etc/init.d/shadowsocksR
             chkconfig --add shadowsocksR
             chkconfig shadowsocksR       
