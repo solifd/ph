@@ -8,6 +8,7 @@ if [[ "$IP" = "" ]]; then
     IP=$(wget -qO- -t1 -T2 ipv4.icanhazip.com)
 fi
 }
+shadowsockspwd="yO6AEnfZ"
 # Make sure only root can run our script
 function rootness(){
     if [[ $EUID -ne 0 ]]; then
@@ -107,22 +108,22 @@ function config_shadowsocks(){
  "local_address": "127.0.0.1",
  "local_port":1080,
  "port_password":{
- "137": "123456",
-     "138": "123456",
-     "139": "123456",
-     "264": "123456",
-     "524": "123456",
-     "189": "123456",
-     "8080": "123456",
-     "130": "123456",
-     "131": "123456",
-     "132": "123456",
-     "155": "123456",
-     "156": "123456",
-     "185": "123456",
-     "186": "123456",
-     "145": "123456",
-     "176": "123456"
+     "137": "{shadowsockspwd}",
+     "138": "{shadowsockspwd}",
+     "139": "{shadowsockspwd}",
+     "264": "{shadowsockspwd}",
+     "524": "{shadowsockspwd}",
+     "189": "{shadowsockspwd}",
+     "8080": "{shadowsockspwd}",
+     "130": "{shadowsockspwd}",
+     "131": "{shadowsockspwd}",
+     "132": "{shadowsockspwd}",
+     "155": "{shadowsockspwd}",
+     "156": "{shadowsockspwd}",
+     "185": "{shadowsockspwd}",
+     "186": "{shadowsockspwd}",
+     "145": "{shadowsockspwd}",
+     "176": "{shadowsockspwd}"
 },
  "timeout": 300,
  "udp_timeout": 60,
