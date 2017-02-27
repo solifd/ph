@@ -49,34 +49,19 @@ shadowsockspwd="51233"
 function download_files(){
         yum install -y wget unzip openssl-devel gcc swig python python-devel python-setuptools autoconf libtool libevent git ntpdate
         yum install -y m2crypto automake make curl curl-devel zlib-devel perl perl-devel cpio expat-devel gettext-devel
-    
+    curl "http://soli-10006287.cos.myqcloud.com/libsodium-1.0.11.tar.gz" -o libsodium-1.0.11.tar.gz
+tar xvf libsodium-1.0.11.tar.gz
+pushd libsodium-1.0.11
+./configure --prefix=/usr && make
+make install
+echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+ldconfig
+popd
+rm -rf libsodium*
+wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR -O /etc/init.d/shadowsocks
 }
 
-# Download files
-function pre_install(){
-    # Download libsodium file
-    if ! wget --no-check-certificate -O libsodium-1.0.10.tar.gz https://git.oschina.net/ben123pw/BFW/raw/master/libsodium-1.0.10.tar.gz; then
-        echo "Failed to download libsodium file!"
-        exit 1
-    fi
-    # Download ShadowsocksR file
-    # if ! wget --no-check-certificate -O manyuser.zip https://git.oschina.net/ben123pw/BFW/raw/master/manyuser.zip; then
-        # echo "Failed to download ShadowsocksR file!"
-        # exit 1
-    # fi
-    # Download ShadowsocksR chkconfig file
-    if [ "$OS" == 'CentOS' ]; then
-        if ! wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR -O /etc/init.d/shadowsocks; then
-            echo "Failed to download ShadowsocksR chkconfig file!"
-            exit 1
-        fi
-    else
-        if ! wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR-debian -O /etc/init.d/shadowsocks; then
-            echo "Failed to download ShadowsocksR chkconfig file!"
-            exit 1
-        fi
-    fi
-}
+
 
 # firewall set
 function firewall_set(){
@@ -181,8 +166,7 @@ function install_cleanup(){
 }
 
     rootness
-    disable_selinux
-    pre_install
+    disable_selinux 
     IP
     download_files
     config_shadowsocks
