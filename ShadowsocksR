@@ -26,7 +26,7 @@ if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; t
     setenforce 0
 fi
 }
-shadowsockspwd="51233"   
+  
     get_char(){
         SAVEDSTTY=`stty -g`
         stty -echo
