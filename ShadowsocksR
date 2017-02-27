@@ -28,7 +28,7 @@ if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; t
 fi
 }
 
-shadowsocksport"80"
+shadowsocksport="80"
 shadowsocksport2="8080"
 shadowsocksport3="138"
 shadowsocksport4="137"
