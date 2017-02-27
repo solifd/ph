@@ -190,21 +190,11 @@ function install_cleanup(){
     rm -rf libsodium-1.0.10
 }
 
-
-# Install ShadowsocksR
-function install_shadowsocks(){
-    
     rootness
     disable_selinux
     pre_install
     download_files
     config_shadowsocks
     install_ss
-    if [ "$OS" == 'CentOS' ]; then
-        firewall_set > /dev/null 2>&1
-    fi
-	check_datetime
-    install_cleanup
 
-}
 
