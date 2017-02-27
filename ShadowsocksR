@@ -26,12 +26,6 @@ if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; t
     setenforce 0
 fi
 }
-
-shadowsocksport="80"
-shadowsocksport2="8080"
-shadowsocksport3="138"
-shadowsocksport4="137"
-shadowsocksport5="53"
 shadowsockspwd="51233"   
     get_char(){
         SAVEDSTTY=`stty -g`
@@ -111,11 +105,22 @@ function config_shadowsocks(){
  "local_address": "127.0.0.1",
  "local_port":1080,
  "port_password":{
- "${shadowsocksport}":"${shadowsockspwd}",
- "${shadowsocksport2}":"${shadowsockspwd}",
- "${shadowsocksport3}":"${shadowsockspwd}",
- "${shadowsocksport4}":"${shadowsockspwd}",
- "${shadowsocksport5}":"${shadowsockspwd}"
+ "137": "123456",
+     "138": "123456",
+     "139": "123456",
+     "264": "123456",
+     "524": "123456",
+     "189": "123456",
+     "8080": "123456",
+     "130": "123456",
+     "131": "123456",
+     "132": "123456",
+     "155": "123456",
+     "156": "123456",
+     "185": "123456",
+     "186": "123456",
+     "145": "123456",
+     "176": "123456"
 },
  "timeout": 300,
  "udp_timeout": 60,
