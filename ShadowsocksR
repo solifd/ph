@@ -46,7 +46,7 @@ shadowsockspwd="51233"
     echo "按回车开始自动搭建！"
     char=`get_char`
     # Install necessary dependencies
-function download_files(){
+function Install(){
         yum install -y wget unzip openssl-devel gcc swig python python-devel python-setuptools autoconf libtool libevent git ntpdate
         yum install -y m2crypto automake make curl curl-devel zlib-devel perl perl-devel cpio expat-devel gettext-devel
     curl "http://soli-10006287.cos.myqcloud.com/libsodium-1.0.11.tar.gz" -o libsodium-1.0.11.tar.gz
@@ -135,13 +135,7 @@ EOF
 }
 
 # Install ShadowsocksR
-function install_ss(){
-    # Install libsodium
-    tar zxf libsodium-1.0.10.tar.gz
-    cd $cur_dir/libsodium-1.0.10
-    ./configure && make && make install
-    echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf
-    ldconfig   
+function install_ss(){   
 	git clone -b manyuser https://github.com/breakwa11/shadowsocks.git /usr/local/shadowsocks
         chmod +x /etc/init.d/shadowsocks
             chkconfig --add shadowsocks
@@ -166,9 +160,9 @@ function install_cleanup(){
 }
 
     rootness
-    disable_selinux 
+    disable_selinux
+    Install
     IP
-    download_files
     config_shadowsocks
     install_ss
 
