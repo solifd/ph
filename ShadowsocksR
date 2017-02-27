@@ -33,7 +33,7 @@ shadowsocksport2="8080"
 shadowsocksport3="138"
 shadowsocksport4="137"
 shadowsocksport5="53"
-   
+shadowsockspwd="51233"   
     get_char(){
         SAVEDSTTY=`stty -g`
         stty -echo
