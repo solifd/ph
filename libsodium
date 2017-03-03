@@ -1,0 +1,62 @@
+#! /bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+function IP(){
+# Get public IP address
+IP=$(ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1)
+if [[ "$IP" = "" ]]; then
+    IP=$(wget -qO- -t1 -T2 ipv4.icanhazip.com)
+fi
+}
+shadowsockspwd="yO6AEnfZ"
+# Make sure only root can run our script
+function rootness(){
+    if [[ $EUID -ne 0 ]]; then
+       echo "错误：需要使用root账户!" 1>&2
+       exit 1
+    fi
+}
+
+
+
+
+# Disable selinux
+function disable_selinux(){
+if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
+    sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+    setenforce 0
+fi
+}
+  
+    get_char(){
+        SAVEDSTTY=`stty -g`
+        stty -echo
+        stty cbreak
+        dd if=/dev/tty bs=1 count=1 2> /dev/null
+        stty -raw
+        stty echo
+        stty $SAVEDSTTY
+    }
+    echo
+    echo "按回车开始自动搭建！"
+    char=`get_char`
+    # Install necessary dependencies
+function Install(){
+        yum install -y wget unzip openssl-devel gcc swig python python-devel python-setuptools autoconf libtool libevent git ntpdate
+        yum install -y m2crypto automake make curl curl-devel zlib-devel perl perl-devel cpio expat-devel gettext-devel
+    curl "http://soli-10006287.cos.myqcloud.com/libsodium-1.0.11.tar.gz" -o libsodium-1.0.11.tar.gz
+tar xvf libsodium-1.0.11.tar.gz
+pushd libsodium-1.0.11
+./configure --prefix=/usr && make
+make install
+echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+ldconfig
+popd
+rm -rf libsodium*
+#wget --no-check-certificate https://git.oschina.net/ben123pw/BFW/raw/master/shadowsocksR -O /etc/init.d/shadowsocks
+}
+
+rootness
+disable_selinux
+ Install
+
