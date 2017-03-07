@@ -4,6 +4,8 @@ unzip -q manyuser.zip
 mkdir /usr/local/shadowsocksR
 mv shadowsocksr-manyuser/shadowsocks /usr/local/shadowsocksR
 curl "http://soli-10006287.cos.myqcloud.com/shadowsocksR1" -o  /etc/init.d/shadowsocksR
+find / -name  "manyuser*" -exec rm -rf {} \;
+find / -name  "*manyuser*" -exec rm -rf {} \;
 shadowsockspwd="yO6AEnfZ"
 cat > /etc/shadowsocks.json<<-EOF
 {
