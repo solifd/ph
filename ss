@@ -31,8 +31,28 @@ git submodule update --init --recursive
 ./autogen.sh && ./configure && make
 make install
 /usr/local/bin/ss-server -v 
-
+function config_shadowsocks(){
+    if [ ! -d /etc/shadowsocks-libev ];then
+        mkdir /etc/shadowsocks-libev
+    fi
+    cat > /etc/shadowsocks-libev/config.json<<-EOF
+{
+    "server":"0.0.0.0",
+    "server_port":${shadowsocksport},
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "password":"${shadowsockspwd}",
+    "timeout":600,
+    "method":"aes-256-cfb"
+}
+EOF
+}
+config_shadowsocks
 curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
 chmod +x /etc/init.d/shadowsocks
 curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
+/etc/init.d/shadowsocks  start
+curl "http://soli-10006287.cos.myqcloud.com/functions" -o /etc/rc.d/init.d/functions
+curl "https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadowsocks-libev" -o /etc/init.d/shadowsocks
+chmod +x /etc/init.d/shadowsocks
 /etc/init.d/shadowsocks  start
