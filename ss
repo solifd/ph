@@ -30,3 +30,4 @@ cd shadowso*
 git submodule update --init --recursive
 ./autogen.sh && ./configure && make
 make install
+/usr/local/bin/ss-server -v 
