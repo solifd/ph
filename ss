@@ -9,7 +9,6 @@ cd autoconf-*
  ./configure --prefix=/usr/
 make && make install
 
-
 export LIBSODIUM_VER=1.0.11
 export MBEDTLS_VER=2.4.2
 #wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-$LIBSODIUM_VER.tar.gz
