@@ -3,6 +3,13 @@
 yum install epel-release -y
 yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
 
+wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
+tar zxvf autoconf-*.tar.gz
+cd autoconf-*
+ ./configure --prefix=/usr/
+make && make install
+
+
 export LIBSODIUM_VER=1.0.11
 export MBEDTLS_VER=2.4.2
 #wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-$LIBSODIUM_VER.tar.gz
