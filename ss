@@ -31,3 +31,8 @@ git submodule update --init --recursive
 ./autogen.sh && ./configure && make
 make install
 /usr/local/bin/ss-server -v 
+
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
+chmod +x /etc/init.d/shadowsocks
+curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
+/etc/init.d/shadowsocks  start
