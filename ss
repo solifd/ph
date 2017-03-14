@@ -1,7 +1,7 @@
 
 #curl "https://raw.githubusercontent.com/solifd/ph/master/ss" -o ss && chmod 755 ss &&./ss &&  rm -rf ss
 yum install epel-release -y
-yum install  gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
+yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
 
 export LIBSODIUM_VER=1.0.11
 export MBEDTLS_VER=2.4.2
@@ -24,9 +24,9 @@ ldconfig
 popd
 rm -rf mbedtls*
 ldconfig
-#git clone https://github.com/shadowsocks/shadowsocks-libev.git
-wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
+git clone https://github.com/shadowsocks/shadowsocks-libev.git
+#wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
 cd shadowso*
-#git submodule update --init --recursive
+git submodule update --init --recursive
 ./autogen.sh && ./configure && make
 make install
