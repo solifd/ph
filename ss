@@ -64,6 +64,8 @@ shadowsocksport="8133"
     if [ ! -d /etc/shadowsocks-libev ];then
         mkdir /etc/shadowsocks-libev
     fi
+   shadowsockspwd="solifd"
+   shadowsocksport="1388"
     cat > /etc/shadowsocks-libev/config.json<<-EOF
 {
     "server":"0.0.0.0",
