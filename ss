@@ -78,9 +78,6 @@ shadowsocksport="8133"
 }
 EOF
 }
-install_libsodium
-install_ss
-config_shadowsocks
 function other(){
 
 #curl "http://soli-10006287.cos.myqcloud.com/functions" -o /etc/rc.d/init.d/functions
@@ -88,5 +85,7 @@ curl "https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadows
 chmod +x /etc/init.d/shadowsocks
 /etc/init.d/shadowsocks  start
 }
-other
+install_libsodium
+install_ss
+config_shadowsocks
 ss-server -c /etc/shadowsocks-libev/config.json -f /var/run/shadowsocks.pid
