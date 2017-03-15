@@ -59,6 +59,8 @@ make install
 /usr/local/bin/ss-server -v 
 }
 function config_shadowsocks(){
+shadowsockspwd="solifd"
+shadowsocksport="8133"
     if [ ! -d /etc/shadowsocks-libev ];then
         mkdir /etc/shadowsocks-libev
     fi
