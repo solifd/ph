@@ -34,7 +34,7 @@ popd
 rm -rf mbedtls*
 ldconfig
 }
-function install_ss(){
+function install_sss(){
 #git clone https://github.com/shadowsocks/shadowsocks-libev.git
 #wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
 ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/shadowsocks-libev/releases/latest | grep 'tag_name' | cut -d\" -f4)
@@ -50,7 +50,14 @@ cd ${shadowsocks_libev_ver}
 make install
 /usr/local/bin/ss-server -v 
 }
-
+function install_ss(){
+git clone https://github.com/shadowsocks/shadowsocks-libev.git
+cd shadowsocks-libev
+git submodule update --init --recursive
+./configure && make
+make install
+/usr/local/bin/ss-server -v 
+}
 function config_shadowsocks(){
     if [ ! -d /etc/shadowsocks-libev ];then
         mkdir /etc/shadowsocks-libev
