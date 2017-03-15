@@ -1,8 +1,8 @@
 
 #curl "https://raw.githubusercontent.com/solifd/ph/master/ss" -o ss && chmod 755 ss &&./ss &&  rm -rf ss
 yum install epel-release -y
-yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
-
+yum install  gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
+#yum install git
 function install_autoconf(){
 wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
 tar zxvf autoconf-*.tar.gz
@@ -43,10 +43,10 @@ ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/
     download_link="https://github.com/shadowsocks/shadowsocks-libev/releases/download/${ver}/${shadowsocks_libev_ver}.tar.gz"
     init_script_link="https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev"
  wget --no-check-certificate -O ${shadowsocks_libev_ver}.tar.gz ${download_link}
-tar zxvf shadowso*
-cd shadowso*
+tar zxvf ${shadowsocks_libev_ver}.tar.gz
+cd ${shadowsocks_libev_ver}
 #git submodule update --init --recursive
-./autogen.sh && ./configure && make
+./configure && make
 make install
 /usr/local/bin/ss-server -v 
 }
@@ -71,13 +71,14 @@ install_libsodium
 install_ss
 config_shadowsocks
 function other(){
-curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
-chmod +x /etc/init.d/shadowsocks
-curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
+#curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
+#chmod +x /etc/init.d/shadowsocks
+#curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
 /etc/init.d/shadowsocks  start
-curl "http://soli-10006287.cos.myqcloud.com/functions" -o /etc/rc.d/init.d/functions
+#curl "http://soli-10006287.cos.myqcloud.com/functions" -o /etc/rc.d/init.d/functions
 curl "https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadowsocks-libev" -o /etc/init.d/shadowsocks
 chmod +x /etc/init.d/shadowsocks
 /etc/init.d/shadowsocks  start
 }
+other
 ss-server -c /etc/shadowsocks-libev/config.json -f /var/run/shadowsocks.pid
