@@ -3,12 +3,15 @@
 yum install epel-release -y
 yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
 
-#wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
-#tar zxvf autoconf-*.tar.gz
-#cd autoconf-*
-# ./configure --prefix=/usr/
-#make && make install
+function install_autoconf(){
+wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
+tar zxvf autoconf-*.tar.gz
+cd autoconf-*
+./configure --prefix=/usr/
+make && make install
+}
 
+function install_libsodium(){
 export LIBSODIUM_VER=1.0.11
 export MBEDTLS_VER=2.4.2
 #wget https://github.com/jedisct1/libsodium/releases/download/1.0.11/libsodium-$LIBSODIUM_VER.tar.gz
@@ -30,13 +33,24 @@ ldconfig
 popd
 rm -rf mbedtls*
 ldconfig
-git clone https://github.com/shadowsocks/shadowsocks-libev.git
+}
+function install_ss(){
+#git clone https://github.com/shadowsocks/shadowsocks-libev.git
 #wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
+ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/shadowsocks-libev/releases/latest | grep 'tag_name' | cut -d\" -f4)
+    [ -z ${ver} ] && echo "Error: Get shadowsocks-libev latest version failed" && exit 1
+    shadowsocks_libev_ver="shadowsocks-libev-$(echo ${ver} | sed -e 's/^[a-zA-Z]//g')"
+    download_link="https://github.com/shadowsocks/shadowsocks-libev/releases/download/${ver}/${shadowsocks_libev_ver}.tar.gz"
+    init_script_link="https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev"
+ wget --no-check-certificate -O ${shadowsocks_libev_ver}.tar.gz ${download_link}
+tar zxvf shadowso*
 cd shadowso*
-git submodule update --init --recursive
+#git submodule update --init --recursive
 ./autogen.sh && ./configure && make
 make install
 /usr/local/bin/ss-server -v 
+}
+
 function config_shadowsocks(){
     if [ ! -d /etc/shadowsocks-libev ];then
         mkdir /etc/shadowsocks-libev
@@ -53,7 +67,10 @@ function config_shadowsocks(){
 }
 EOF
 }
+install_libsodium
+install_ss
 config_shadowsocks
+function other(){
 curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks " -o  /etc/init.d/shadowsocks
 chmod +x /etc/init.d/shadowsocks
 curl "https://raw.githubusercontent.com/solifd/ph/master/shadowsocks/shadowsocks.json" -o  /etc/shadowsocks.json
@@ -62,4 +79,5 @@ curl "http://soli-10006287.cos.myqcloud.com/functions" -o /etc/rc.d/init.d/funct
 curl "https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadowsocks-libev" -o /etc/init.d/shadowsocks
 chmod +x /etc/init.d/shadowsocks
 /etc/init.d/shadowsocks  start
+}
 ss-server -c /etc/shadowsocks-libev/config.json -f /var/run/shadowsocks.pid
