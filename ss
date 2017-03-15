@@ -84,6 +84,6 @@ chmod +x /etc/init.d/shadowsocks
 /etc/init.d/shadowsocks  start
 }
 install_libsodium
-install_sss
+install_ss
 config_shadowsocks
 ss-server -c /etc/shadowsocks-libev/config.json -f /var/run/shadowsocks.pid
