@@ -1,8 +1,8 @@
 
 #curl "https://raw.githubusercontent.com/solifd/ph/master/ss" -o ss && chmod 755 ss &&./ss &&  rm -rf ss
 yum install epel-release -y
-yum install  gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
-#yum install git
+yum install git gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto udns-devel libev-devel wget  -y
+ 
 function install_autoconf(){
 wget ftp://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
 tar zxvf autoconf-*.tar.gz
