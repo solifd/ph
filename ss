@@ -35,8 +35,7 @@ rm -rf mbedtls*
 ldconfig
 }
 function install_sss(){
-#git clone https://github.com/shadowsocks/shadowsocks-libev.git
-#wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
+wget --no-check-certificate -O shadowsocks.tar.gz https://github.com/shadowsocks/shadowsocks-libev/archive/v3.0.3.tar.gz
 ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/shadowsocks-libev/releases/latest | grep 'tag_name' | cut -d\" -f4)
     [ -z ${ver} ] && echo "Error: Get shadowsocks-libev latest version failed" && exit 1
     shadowsocks_libev_ver="shadowsocks-libev-$(echo ${ver} | sed -e 's/^[a-zA-Z]//g')"
@@ -45,7 +44,6 @@ ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/
  wget --no-check-certificate -O ${shadowsocks_libev_ver}.tar.gz ${download_link}
 tar zxvf ${shadowsocks_libev_ver}.tar.gz
 cd ${shadowsocks_libev_ver}
-#git submodule update --init --recursive
 ./configure && make
 make install
 /usr/local/bin/ss-server -v 
