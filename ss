@@ -54,7 +54,7 @@ function install_ss(){
 git clone https://github.com/shadowsocks/shadowsocks-libev.git
 cd shadowsocks-libev
 git submodule update --init --recursive
-./configure && make
+./autogen.sh && ./configure && make
 make install
 /usr/local/bin/ss-server -v 
 }
