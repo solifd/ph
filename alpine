@@ -3,9 +3,9 @@ pip install supervisor
 mkdir /tmp/libsodium
 curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.10/libsodium-1.0.10.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 
 cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo)  &&   make install &&  ldconfig
-curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && pip install cymysql 
+#curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && pip install cymysql 
  mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
-apk --no-cache del build-base 
+#apk --no-cache del build-base 
  rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
  echo_supervisord_conf > /etc/supervisord.conf \
  echo "[program:shadowsocks]
