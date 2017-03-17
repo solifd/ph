@@ -8,6 +8,8 @@ cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i
  mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
 #apk --no-cache del build-base 
  rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
+ 
+ supervisor() {
  echo_supervisord_conf > /etc/supervisord.conf \
  echo "[program:shadowsocks]
 command =python /data/shadowsocks/shadowsocks/shadowsocks/server.py -c /etc/shadowsocks.json
@@ -17,6 +19,7 @@ autoresart = true
 #stderr_logfile = /var/log/supervisor/ss.stderr.log
 #stdout_logfile = /var/log/supervisor/ss.stdout.log
 ">> /etc/supervisord.conf
+}
  shadowsockspwd="yO6AEnfZ"
 cat > /etc/shadowsocks.json<<-EOF
 {
