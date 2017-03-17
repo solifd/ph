@@ -9,7 +9,6 @@ cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i
 }
  mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
 #apk --no-cache del build-base 
-apk --no-cache del py-pip curl
  rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
  curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
  supervisor() {
