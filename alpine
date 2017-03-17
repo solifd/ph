@@ -61,5 +61,4 @@ cat > /etc/shadowsocks.json<<-EOF
  "workers": 1
 }
 EOF
-
-supervisord
+libsodium
