@@ -21,6 +21,6 @@
      "176": "123456"
  },
  "timeout":300,
- "method":"aes-256-cfb",
+ "method":"chacha20-ietf ",
  "fast_open": false
 }
