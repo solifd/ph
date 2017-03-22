@@ -1,5 +1,5 @@
-apk --update --no-cache add python git iproute2 build-base tar curl  py-pip
-pip install --upgrade pip
+apk --update --no-cache add python git iproute2 build-base tar curl  py-pip && pip install --upgrade pip
+
 #apk --update --no-cache add python git  py-pip
 pip install supervisor
  mkdir /tmp/libsodium
