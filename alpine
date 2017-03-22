@@ -8,7 +8,7 @@ pip install supervisor
 #curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && 
 pip install cymysql 
  mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
-apk --no-cache del build-base 
+apk --no-cache del build-base git 
  rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
  curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
  supervisor() {
