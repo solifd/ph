@@ -49,7 +49,7 @@ cat > /etc/shadowsocks.json<<-EOF
 },
  "timeout": 300,
  "udp_timeout": 60,
- "method": "aes-256-cfb",
+ "method": "chacha20-ietf",
  "protocol": "auth_sha1",
  "protocol_param": "",
  "obfs": "http_simple",
