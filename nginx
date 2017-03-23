@@ -1,0 +1,102 @@
+#!/bin/bash
+groupadd www
+useradd -s /sbin/nologin -g www www
+yum -y install gcc gcc-c++ autoconf automake  zlib zlib-devel openssl openssl-devel pcre-devel wget net-tools 
+wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP.tar.gz
+tar -zxvf GeoIP.tar.gz
+cd GeoIP*
+./configure
+make; make install
+cd ..
+echo '/usr/local/lib' > /etc/ld.so.conf.d/geoip.conf
+ ldconfig
+
+
+if [ -s libunwind-1.2.tar.gz ]; then
+
+echo "libunwind-1.1.tar.gz [found]"
+
+else
+
+echo "Error: libunwind-1.1.tar.gz not found!!!download now......"
+
+
+
+#wget -c http://mk88-10010277.file.myqcloud.com/libunwind-1.1.tar.gz
+wget -c http://download.savannah.gnu.org/releases/libunwind/libunwind-1.2.tar.gz
+fi
+
+tar zxvf libunwind-1.2.tar.gz
+
+cd libunwind-1.2/
+
+CFLAGS=-fPIC ./configure --prefix=/usr
+
+make CFLAGS=-fPIC
+
+make CFLAGS=-fPIC install
+
+cd ..
+
+rm -rf libunwind-1.2
+
+
+if [ -s gperftools-2.5.tar.gz ]; then
+
+echo "gperftools-2.5.tar.gz [found]"
+
+else
+
+echo "Error: gperftools-2.2.1.tar.gz not found!!!download now......"
+
+
+
+#wget -c http://mk88-10010277.file.myqcloud.com/gperftools-2.2.1.tar.gz
+wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.tar.gz
+fi
+
+tar zxvf gperftools-2.5.tar.gz 
+
+cd gperftools-2.5
+
+./configure  
+
+make && make install 
+
+echo "/usr/local/lib" > /etc/ld.so.conf.d/usr_local_lib.conf 
+
+/sbin/ldconfig
+
+mkdir /tmp/tcmalloc
+
+chmod 0777 /tmp/tcmalloc
+
+cd ..
+
+rm -rf gperftools-2.5
+
+wget -c http://nginx.org/download/nginx-1.11.0.tar.gz
+tar zxvf nginx*.tar.gz
+cd nginx*
+if [ -s mod.tar.gz ]; then
+echo "mod.tar.gz [found]"
+else
+echo "Error: mod.tar.gz not found!!!download now......"
+
+wget -c http://soli-10006287.file.myqcloud.com/mod.tar.gz
+fi
+tar zxvf mod.tar.gz && tar zxvf  libressl*
+./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-google_perftools_module --add-module=nginx-accesskey-2.0.3/ --with-openssl=libressl-2.5.1 --with-ld-opt=-lrt --add-module=nginx-http-footer-filter-1.2.2/ --with-http_realip_module --add-module=ngx_http_substitutions_filter_module-master/ --with-http_sub_module --with-http_v2_module  --with-http_geoip_module
+
+make
+make install
+#/usr/sbin/groupadd -f www
+#/usr/sbin/useradd -g www www
+#/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+
+rm -rf /etc/init.d/nginx
+wget -c http://soft.vpser.net/lnmp/ext/init.d.nginx
+cp init.d.nginx /etc/init.d/nginx
+chmod +x /etc/init.d/nginx
+cd .. && rm -rf  nginx* 
