@@ -7,7 +7,8 @@ wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP.tar.gz
 tar -zxvf GeoIP.tar.gz
 cd GeoIP*
 ./configure
-make; make install
+make
+make install
 cd ..
 find 
 echo '/usr/local/lib' > /etc/ld.so.conf.d/geoip.conf
