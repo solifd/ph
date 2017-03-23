@@ -3,6 +3,7 @@
 groupadd www
 useradd -s /sbin/nologin -g www www
 yum -y install gcc gcc-c++ autoconf automake  zlib zlib-devel openssl openssl-devel pcre-devel wget net-tools 
+function GeoIP() {
 wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP.tar.gz
 tar -zxvf GeoIP.tar.gz
 cd GeoIP*
@@ -12,9 +13,10 @@ make install
 cd ..
 find 
 echo '/usr/local/lib' > /etc/ld.so.conf.d/geoip.conf
- ldconfig
+ldconfig
 find ./ -type f  -name 'GeoI*' -print0 | xargs -0 -I {} rm {}
-
+}
+function libunwind() {
 if [ -s libunwind-1.2.tar.gz ]; then
 
 echo "libunwind-1.1.tar.gz [found]"
@@ -42,6 +44,9 @@ make CFLAGS=-fPIC install
 cd ..
 
 find ./ -type f  -name 'libunwind*' -print0 | xargs -0 -I {} rm {}
+}
+
+function gperftools() {
 
 if [ -s gperftools-2.5.tar.gz ]; then
 
@@ -76,6 +81,9 @@ chmod 0777 /tmp/tcmalloc
 cd ..
 
 find ./ -type f  -name 'gperftools*' -print0 | xargs -0 -I {} rm {}
+}
+function nginx() {
+
 
 wget -c http://nginx.org/download/nginx-1.11.0.tar.gz
 tar zxvf nginx*.tar.gz -C /tmp
@@ -103,3 +111,10 @@ cp init.d.nginx /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 cd .. 
 find ./ -type f  -name 'nginx*' -print0 | xargs -0 -I {} rm {}
+}
+
+GeoIP
+libunwind
+gperftools
+nginx
+
