@@ -4,9 +4,10 @@ groupadd www
 useradd -s /sbin/nologin -g www www
 yum -y install gcc gcc-c++ autoconf automake  zlib zlib-devel openssl openssl-devel pcre-devel wget net-tools 
 function GeoIP() {
+cd /tmp
 wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP.tar.gz
-tar -zxvf GeoIP.tar.gz
-cd GeoIP*
+tar -zxvf GeoIP.tar.gz -C /tmp
+cd /tmp/GeoIP*
 ./configure
 make
 make install
@@ -110,10 +111,12 @@ cp init.d.nginx /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 cd .. 
 find ./ -type f  -name 'nginx*' -print0 | xargs -0 -I {} rm {}
+rm -rf /tmp/*
 }
 
 GeoIP
 libunwind
 gperftools
 nginx
+
 /etc/init.d/nginx start
