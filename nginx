@@ -116,4 +116,4 @@ GeoIP
 libunwind
 gperftools
 nginx
-
+/etc/init.d/nginx start
