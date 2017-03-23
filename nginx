@@ -14,7 +14,7 @@ cd ..
 find 
 echo '/usr/local/lib' > /etc/ld.so.conf.d/geoip.conf
 ldconfig
-find ./ -type f  -name 'GeoI*' -print0 | xargs -0 -I {} rm {}
+#find ./ -type f  -name 'GeoI*' -print0 | xargs -0 -I {} rm {}
 }
 function libunwind() {
 if [ -s libunwind-1.2.tar.gz ]; then
