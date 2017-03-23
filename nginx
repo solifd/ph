@@ -8,9 +8,10 @@ cd GeoIP*
 ./configure
 make; make install
 cd ..
+find 
 echo '/usr/local/lib' > /etc/ld.so.conf.d/geoip.conf
  ldconfig
-
+find ./ -type f  -name 'GeoI*' -print0 | xargs -0 -I {} rm {}
 
 if [ -s libunwind-1.2.tar.gz ]; then
 
@@ -38,8 +39,7 @@ make CFLAGS=-fPIC install
 
 cd ..
 
-rm -rf libunwind-1.2
-
+find ./ -type f  -name 'libunwind*' -print0 | xargs -0 -I {} rm {}
 
 if [ -s gperftools-2.5.tar.gz ]; then
 
@@ -73,7 +73,7 @@ chmod 0777 /tmp/tcmalloc
 
 cd ..
 
-rm -rf gperftools-2.5
+find ./ -type f  -name 'gperftools*' -print0 | xargs -0 -I {} rm {}
 
 wget -c http://nginx.org/download/nginx-1.11.0.tar.gz
 tar zxvf nginx*.tar.gz
@@ -99,4 +99,5 @@ rm -rf /etc/init.d/nginx
 wget -c http://soft.vpser.net/lnmp/ext/init.d.nginx
 cp init.d.nginx /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
-cd .. && rm -rf  nginx* 
+cd .. 
+find ./ -type f  -name 'nginx*' -print0 | xargs -0 -I {} rm {}
