@@ -29,7 +29,7 @@ echo "Error: libunwind-1.1.tar.gz not found!!!download now......"
 
 
 
-wget -c http://mk88-10010277.file.myqcloud.com/libunwind-1.2.tar.gz
+wget -c http://soli-10006287.file.myqcloud.com/libunwind-1.2.tar.gz 
 #wget -c http://download.savannah.gnu.org/releases/libunwind/libunwind-1.2.tar.gz
 fi
 
@@ -53,17 +53,11 @@ function gperftools() {
 if [ -s gperftools-2.5.tar.gz ]; then
 
 echo "gperftools-2.5.tar.gz [found]"
-
 else
-
 echo "Error: gperftools-2.2.1.tar.gz not found!!!download now......"
-
-
-
-wget -c http://mk88-10010277.file.myqcloud.com/gperftools-2.5.tar.gz
+ wget -c http://soli-10006287.file.myqcloud.com/gperftools-2.5.tar.gz  
 #wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.tar.gz
 fi
-
 tar zxvf gperftools-2.5.tar.gz 
 
 cd gperftools-2.5
@@ -97,9 +91,9 @@ echo "Error: mod.tar.gz not found!!!download now......"
 
 wget -c http://soli-10006287.file.myqcloud.com/mod.tar.gz
 fi
-tar zxvf $PWD/mod.tar.gz -C /tmp/nginx*&& tar zxvf  $PWD/libressl* -C  /tmp/nginx*
+tar zxvf $PWD/mod.tar.gz -C /tmp&& tar zxvf  $PWD/libressl* -C  /tmp/nginx*
 #cd /tmp/nginx*
-./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-google_perftools_module --add-module=nginx-accesskey-2.0.3/ --with-openssl=libressl-2.5.1 --with-ld-opt=-lrt --add-module=nginx-http-footer-filter-1.2.2/ --with-http_realip_module --add-module=ngx_http_substitutions_filter_module-master/ --with-http_sub_module --with-http_v2_module  --with-http_geoip_module
+./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-google_perftools_module --add-module=/tmp/nginx-accesskey-2.0.3/ --with-openssl=/tmp/libressl-2.5.1 --with-ld-opt=-lrt --add-module=/tmp/nginx-http-footer-filter-1.2.2/ --with-http_realip_module --add-module=/tmp/ngx_http_substitutions_filter_module-master/ --with-http_sub_module --with-http_v2_module  --with-http_geoip_module
 
 make
 make install
