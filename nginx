@@ -29,8 +29,8 @@ echo "Error: libunwind-1.1.tar.gz not found!!!download now......"
 
 
 
-#wget -c http://mk88-10010277.file.myqcloud.com/libunwind-1.1.tar.gz
-wget -c http://download.savannah.gnu.org/releases/libunwind/libunwind-1.2.tar.gz
+wget -c http://mk88-10010277.file.myqcloud.com/libunwind-1.2.tar.gz
+#wget -c http://download.savannah.gnu.org/releases/libunwind/libunwind-1.2.tar.gz
 fi
 
 tar zxvf libunwind-1.2.tar.gz
@@ -60,8 +60,8 @@ echo "Error: gperftools-2.2.1.tar.gz not found!!!download now......"
 
 
 
-#wget -c http://mk88-10010277.file.myqcloud.com/gperftools-2.2.1.tar.gz
-wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.tar.gz
+wget -c http://mk88-10010277.file.myqcloud.com/gperftools-2.5.tar.gz
+#wget -c https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.tar.gz
 fi
 
 tar zxvf gperftools-2.5.tar.gz 
