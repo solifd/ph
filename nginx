@@ -92,7 +92,7 @@ echo "Error: mod.tar.gz not found!!!download now......"
 wget -c http://soli-10006287.file.myqcloud.com/mod.tar.gz
 fi
 tar zxvf $PWD/mod.tar.gz -C /tmp&& tar zxvf  /tmp/libressl* -C  /tmp
-#cd /tmp/nginx*
+cd /tmp/nginx*
 ./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-google_perftools_module --add-module=/tmp/nginx-accesskey-2.0.3/ --with-openssl=/tmp/libressl-2.5.1 --with-ld-opt=-lrt --add-module=/tmp/nginx-http-footer-filter-1.2.2/ --with-http_realip_module --add-module=/tmp/ngx_http_substitutions_filter_module-master/ --with-http_sub_module --with-http_v2_module  --with-http_geoip_module
 
 make
