@@ -117,9 +117,9 @@ cd ..
 #rm -rf /tmp/*
 }
 
-#GeoIP
-#libunwind
-#gperftools
+GeoIP
+libunwind
+gperftools
 nginx
 
 /etc/init.d/nginx start
