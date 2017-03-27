@@ -107,7 +107,7 @@ wget -c http://soft.vpser.net/lnmp/ext/init.d.nginx
 cp init.d.nginx /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 cd .. 
-#find ./ -type f  -name 'nginx*' -print0 | xargs -0 -I {} rm {}
+find /tmp -type f  -name 'nginx*' -print0 | xargs -0 -I {} rm {}
 #rm -rf /tmp/*
 }
 
