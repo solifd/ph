@@ -6,9 +6,10 @@ function libsodium() {
  mkdir /tmp/libsodium
  curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.12/libsodium-1.0.12.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 
  cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo)  &&  make install &&  ldconfig
-#curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && 
-pip install cymysql 
 }
+curl -Lk https://bootstrap.pypa.io/get-pip.py | python  
+pip install cymysql 
+
  mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
 apk --no-cache del  git 
  rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
@@ -31,22 +32,8 @@ cat > /etc/shadowsocks.json<<-EOF
  "server_ipv6": "::",
  "local_address": "127.0.0.1",
  "local_port":1080,
- "port_password":{
-    "137": "${shadowsockspwd}",
-     "138": "${shadowsockspwd}",
-     "139": "${shadowsockspwd}",
-     "264": "${shadowsockspwd}",
-     "524": "${shadowsockspwd}",
-     "189": "${shadowsockspwd}",
+ "port_password":{    
      "8080": "${shadowsockspwd}",
-     "130": "${shadowsockspwd}",
-     "131": "${shadowsockspwd}",
-     "132": "${shadowsockspwd}",
-     "155": "${shadowsockspwd}",
-     "156": "${shadowsockspwd}",
-     "185": "${shadowsockspwd}",
-     "186": "${shadowsockspwd}",
-     "145": "${shadowsockspwd}",
      "176": "${shadowsockspwd}"
 },
  "timeout": 300,
