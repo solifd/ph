@@ -42,7 +42,7 @@ cat > /etc/shadowsocks.json<<-EOF
 }
 EOF
 }
-
+function usrjson() {
 cat > /etc/shadowsocks.json<<-EOF
 {
     "server": "0.0.0.0",
@@ -63,5 +63,8 @@ cat > /etc/shadowsocks.json<<-EOF
     "redirect": "",
     "fast_open": "false"
 }
+}
 EOF
+install
 libsodium
+usrjson
