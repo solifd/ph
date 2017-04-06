@@ -1,20 +1,20 @@
 function install() {
 apk --update --no-cache add python git iproute2 build-base tar curl  py-pip && pip install --upgrade pip
 #apk --update --no-cache add python git  py-pip && pip install --upgrade pip
+curl -Lk https://bootstrap.pypa.io/get-pip.py | python  
+pip install cymysql 
 pip install supervisor
 }
 function libsodium() {
  mkdir /tmp/libsodium
  curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.12/libsodium-1.0.12.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 
  cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo)  &&  make install &&  ldconfig
-}
-curl -Lk https://bootstrap.pypa.io/get-pip.py | python  
-pip install cymysql 
-
 mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
 apk --no-cache del  git 
 rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
 curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
+}
+
 function json() {
  shadowsockspwd="yO6AEnfZ"
 cat > /etc/shadowsocks.json<<-EOF
