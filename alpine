@@ -63,8 +63,9 @@ cat > /etc/shadowsocks.json<<-EOF
     "redirect": "",
     "fast_open": "false"
 }
-}
+
 EOF
+}
 install
 libsodium
 usrjson
