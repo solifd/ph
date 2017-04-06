@@ -9,7 +9,7 @@ apk --no-cache del  git
 rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
 curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
 
-
+}
 function libsodium() {
  mkdir /tmp/libsodium
  curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.12/libsodium-1.0.12.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 
