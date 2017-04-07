@@ -1,5 +1,6 @@
 function install() {
 #apk --update --no-cache add python git iproute2 build-base tar curl  py-pip && pip install --upgrade pip
+echo "*/15    *       *       *       *       sh  /root/ip">> /var/spool/cron/crontabs/root
 apk --update --no-cache add python git  py-pip libsodium && pip install --upgrade pip
 #curl -Lk https://bootstrap.pypa.io/get-pip.py | python  
 #pip install cymysql 
