@@ -6,9 +6,7 @@ pip install cymysql
 pip install supervisor
 mkdir -p /data/shadowsocks; cd /data/shadowsocks  \
     && curl -sS https://codeload.github.com/shadowsocksr/shadowsocksr/tar.gz/manyuser | tar zxvf - \
-    && mv /data/shadowsocks/shadowsocksr-manyuser /data/shadowsocks/shadowsocks \
-    && cd /opt/shadowsocksr-manyuser \
-    && chmod +x *.sh && chmod +x shadowsocks/*.sh && chmod +x server.py
+    && mv /data/shadowsocks/shadowsocksr-manyuser /data/shadowsocks/shadowsocks \    
 rm -rf /var/cache/apk/* ~/.cache 
 curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
 
