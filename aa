@@ -7,7 +7,7 @@ pip install supervisor
 mkdir -p /data/shadowsocks; cd /data/shadowsocks  \
     && curl -sS https://codeload.github.com/shadowsocksr/shadowsocksr/tar.gz/manyuser | tar zxvf - \
     && cd  /data/shadowsocks/shadowsocksr-manyuser  \   
-    &&  mv * ..  \ 
+mv * ..  
 rm -rf /var/cache/apk/* ~/.cache 
 curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
 
