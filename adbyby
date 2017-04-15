@@ -1,0 +1,9 @@
+wget -O "adbyby.tar.gz" "http://update.adbyby.com/download/linux.64.tar.gz"
+tar -xzf adbyby.tar.gz && cd bin 
+echo "1" > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118
+echo -e "https://easylist-downloads.adblockplus.org/easylistchina.txt
+https://easylist.to/easylist/easylist.txt
+https://raw.githubusercontent.com/xinggsf/Adblock-Plus-Rule/master/ABP-FX.txt" >> adhook.ini
+nohup ./adbyby > /dev/null 2>&1 &
+kill -9 $(ps -ef|grep "adbyby"|grep -v grep|awk '{print $2}')
