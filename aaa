@@ -1,8 +1,5 @@
-function install() {
 #echo "*/15    *       *       *       *       sh  /root/ip">> /var/spool/cron/crontabs/root
 #curl "https://raw.githubusercontent.com/solifd/x/master/get-ip" -o  /root/ip 
-
-}
 function json() {
  shadowsockspwd="yO6AEnfZ"
 cat > /etc/shadowsocks.json<<-EOF
@@ -105,5 +102,4 @@ cat > usermysql.json<<-EOF
 }
 EOF
 }
-install
 usrjson
