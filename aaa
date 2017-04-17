@@ -1,6 +1,6 @@
 function install() {
-echo "*/15    *       *       *       *       sh  /root/ip">> /var/spool/cron/crontabs/root
-curl "https://raw.githubusercontent.com/solifd/x/master/get-ip" -o  /root/ip 
+#echo "*/15    *       *       *       *       sh  /root/ip">> /var/spool/cron/crontabs/root
+#curl "https://raw.githubusercontent.com/solifd/x/master/get-ip" -o  /root/ip 
 rm -rf /var/cache/apk/* ~/.cache 
 curl "https://raw.githubusercontent.com/solifd/x/master/supervisord.conf" -o /etc/supervisord.conf 
 
