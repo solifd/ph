@@ -79,7 +79,7 @@ cd ..
 find ./ -type f  -name 'gperftools*' -print0 | xargs -0 -I {} rm {}
 }
 function nginx() {
-nginx="nginx-1.13.1"
+nginx="nginx-1.12.0"
 
 wget -c http://nginx.org/download/${nginx}.tar.gz
 tar zxvf ${nginx}.tar.gz -C /tmp
