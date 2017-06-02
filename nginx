@@ -81,7 +81,7 @@ find ./ -type f  -name 'gperftools*' -print0 | xargs -0 -I {} rm {}
 function nginx() {
 
 
-wget -c http://nginx.org/download/nginx-1.11.0.tar.gz
+wget -c http://nginx.org/download/nginx-1.13.1.tar.gz
 tar zxvf nginx*.tar.gz -C /tmp
 cd /tmp/nginx*
 if [ -s mod.tar.gz ]; then
