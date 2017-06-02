@@ -116,4 +116,4 @@ libunwind
 gperftools
 nginx
 
-/etc/init.d/nginx start
+/etc/init.d/nginx restart
