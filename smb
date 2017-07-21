@@ -272,7 +272,7 @@
 #    browseable = yes
 
 [Share]
-   path = /home/share
+   path = /home/
    writable = yes
    guest ok = yes
    guest only = yes
